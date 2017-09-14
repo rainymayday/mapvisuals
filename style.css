@@ -3,18 +3,27 @@
 	  stroke: tomato;
 	  pointer-events: none;
 	  fill: none;
-    stroke-dasharray:1000,1000;
+    /*stroke-dasharray:1000,1000;
     stroke-dashoffset:1000;
-    -webkit-animation: 'draw' 5s linear alternate;
-    animation-iteration-count:infinite;
+    -webkit-animation: 'draw' 25s infinite;
+    animation-iteration-count:'draw' infinite;*/
 	}
-  @-webkit-keyframes draw {
-
-
+  /*@-webkit-keyframes draw {
+    from{
+      stroke-dasharray:1000,1000;
+    }
         to {
             stroke-dashoffset: 0;
         }
     }
+    @keyframes mymove {
+        from {
+          stroke-dasharray:1000,1000;
+        }
+        to {
+          stroke-dashoffset: 0;
+        }
+    }*/
 
   circle{
     fill: tomato;

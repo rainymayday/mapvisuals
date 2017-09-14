@@ -94,21 +94,9 @@ d3.json("data/asia.geojson", function(error, root) {
               d3.select(this)
                   .attr("fill","black")
                   .attr("opacity",0.5);
-          })
+          });
 
-  var arcs = g.append("g")
-            .attr("class","arcs");
-
-    arcs.selectAll("path")
-      			.data(arcdata)
-      			.enter()
-      			.append("path")
-						.attr('d', function(d) {
-       				return lngLatToArc(d, 'sourceLocation', 'targetLocation', 5);})
-            .attr("marker-start","url(#startPoint)")
-            .attr("marker-end","url(#arrow)");
-
-
+timeForTimeline();
 g.selectAll(".mark")
 						    .data(marks)
 						    .enter()
@@ -119,6 +107,29 @@ g.selectAll(".mark")
 						    .attr("xlink:href",'https://cdn3.iconfinder.com/data/icons/softwaredemo/PNG/24x24/DrawingPin1_Blue.png')
 						    .attr("transform", function(d) {return "translate(" + projection([d.long,d.lat]) + ")";});
 });
+
+
+function timeForTimeline(){ // har
+    var timeline = g.append("g")
+	            .attr("class","arcs")
+							.selectAll("path")
+							.data(arcdata)
+							.enter()
+							.append("path")
+							.attr('d', function(d) {
+												return lngLatToArc(d, 'sourceLocation', 'targetLocation', 5);});
+    repeat();
+    function repeat() {
+    timeline.attr("marker-start","url(#startPoint)")
+	  .attr("marker-end","url(#arrow)")
+		.style("stroke-dasharray", "1000, 1000")
+		.transition()
+		.duration(2000)
+		.styleTween("stroke-dashoffset", function() {
+	 return d3.interpolateNumber(1000, 0);})
+    .each("end", repeat);
+};
+};
 
 function lngLatToArc(d, sourceName, targetName, bend){
 		// If no bend is supplied, then do the plain square root
