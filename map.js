@@ -7,7 +7,12 @@ var arcdata = [
 			sourceLocation:[103.640949, 1.323385]
 		}  ]
 
-var svg = d3.select("body").append("svg")
+var marks = [
+	{long: 78.963239, lat: 20.821930},
+	{long: 117.525544, lat: 38.838788},
+	{long: 100.462383, lat: 5.371320}];
+
+var svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height)
     .append("g")
@@ -18,13 +23,10 @@ var projection = d3.geo.mercator()
           .scale(500)
           .translate([width/3,height/3]);
 
-
 var path = d3.geo.path()
         .projection(projection);
 
 var defs = svg.append("defs");
-
-// var color = d3.scale.category20();
 
 var arrowMarker = defs.append("marker")
 						.attr("id","arrow")
@@ -42,8 +44,6 @@ arrowMarker.append("path")
 			.attr("d",arrow_path)
 			.attr("fill","tomato")
 
-
-
 var startMarker = defs.append("marker")
       .attr("id","startPoint")
       .attr("markerUnits","strokeWidth")
@@ -58,7 +58,6 @@ startMarker.append("circle")
       			.attr("cx",6)
       			.attr("cy",6)
       			.attr("r",2)
-      			// .attr("fill","tomato");
 
 svg.append("text")
             .text("Y3 real-time demo")
@@ -66,26 +65,12 @@ svg.append("text")
             .attr("y",50)
             .attr("text-anchor","middle")
 
-
-// var zoom = d3.behavior.zoom()
-// 					   .translate(projection.translate())
-// 						 .scale(projection.scale())
-// 						 .scaleExtent([height, 2 * height])
-// 						 .on("zoom", zoomed);
-
 var zoom = d3.behavior.zoom().on('zoom', function() {
 						    g.attr('transform', 'translate(' + d3.event.translate.join(',') + ') scale(' + d3.event.scale + ')');
 						    //g.selectAll('path').attr('d', path.projection(projection));
 						  });
 
 var g = svg.append("g");
-// 					//  .call(zoom);
-//
-// g.append("rect")
-//           //  .attr("class", "background")
-// 					 .attr("width", width)
-// 					 .attr("height", height);
-
 
 d3.json("data/asia.geojson", function(error, root) {
   if (error)
@@ -101,9 +86,6 @@ d3.json("data/asia.geojson", function(error, root) {
     .attr("fill", "black")
     .attr("opacity",0.5)
     .attr("d", path )
-		// .attr("fill", function(d,i){
-		// 	return color(i);
-		// })
     .on("mouseover",function(d,i){
               d3.select(this)
                   .attr("fill","yellow");
@@ -113,7 +95,6 @@ d3.json("data/asia.geojson", function(error, root) {
                   .attr("fill","black")
                   .attr("opacity",0.5);
           })
-			// .on("click",clicked);
 
   var arcs = g.append("g")
             .attr("class","arcs");
@@ -122,25 +103,26 @@ d3.json("data/asia.geojson", function(error, root) {
       			.data(arcdata)
       			.enter()
       			.append("path")
+						.attr('d', function(d) {
+       				return lngLatToArc(d, 'sourceLocation', 'targetLocation', 5);})
             .attr("marker-start","url(#startPoint)")
-            .attr("marker-end","url(#arrow)")
-            .style("stroke-dasharray", "1000, 1000")
-            .transition()
-            .duration(4000)
-            .styleTween("stroke-dashoffset", function() {
-           return d3.interpolateNumber(1000, 0);})
-           .attr('d', function(d) {
-      				return lngLatToArc(d, 'sourceLocation', 'targetLocation', 5); // A bend of 5 looks nice and subtle, but this will depend on the length of your arcs and the visual look your visualization requires. Higher number equals less bend.
-      			});
+            .attr("marker-end","url(#arrow)");
 
 
+g.selectAll(".mark")
+						    .data(marks)
+						    .enter()
+						    .append("image")
+						    .attr('class','mark')
+						    .attr('width', 20)
+						    .attr('height', 20)
+						    .attr("xlink:href",'https://cdn3.iconfinder.com/data/icons/softwaredemo/PNG/24x24/DrawingPin1_Blue.png')
+						    .attr("transform", function(d) {return "translate(" + projection([d.long,d.lat]) + ")";});
 });
 
 function lngLatToArc(d, sourceName, targetName, bend){
 		// If no bend is supplied, then do the plain square root
 		bend = bend || 1;
-		// `d[sourceName]` and `d[targetname]` are arrays of `[lng, lat]`
-		// Note, people often put these in lat then lng, but mathematically we want x then y which is `lng,lat`
 
 		var sourceLngLat = d[sourceName],
 				targetLngLat = d[targetName];
@@ -149,8 +131,6 @@ function lngLatToArc(d, sourceName, targetName, bend){
 			var sourceXY = projection( sourceLngLat ),
 					targetXY = projection( targetLngLat );
 
-			// Uncomment this for testing, useful to see if you have any null lng/lat values
-			// if (!targetXY) console.log(d, targetLngLat, targetXY)
 			var sourceX = sourceXY[0],
 					sourceY = sourceXY[1];
 
@@ -167,23 +147,5 @@ function lngLatToArc(d, sourceName, targetName, bend){
 			return "M0,0,l0,0z";
 		}
 	}
-
-// 	function clicked(d) {
-//   var centroid = path.centroid(d),
-//       translate = projection.translate();
-//
-//   projection.translate([
-//     translate[0] - centroid[0] + width / 2,
-//     translate[1] - centroid[1] + height / 2
-//   ]);
-//
-//   zoom.translate(projection.translate());
-//
-//   g.selectAll("path").transition()
-//       .duration(700)
-//       .attr("d", path);
-// }
-
-
 
 svg.call(zoom);
