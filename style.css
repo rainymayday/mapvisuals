@@ -1,4 +1,4 @@
-    .arcs path {
+    .arcs {
 	  stroke-width: 2px;
 	  stroke: tomato;
 	  pointer-events: none;
@@ -14,9 +14,7 @@
             stroke-dashoffset: 0;
         }
     }
-  .arrow path{
-    fill: yellow;
-  }
+
   circle{
     fill: tomato;
 
@@ -29,7 +27,9 @@
   }
   body{
     background-color: rgb(64,74,89);
+    /*background-color: black;*/
   }
+
   path{
 
   }

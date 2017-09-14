@@ -17,17 +17,14 @@ var projection = d3.geo.mercator()
           .center([116.4074, 39.9042])
           .scale(500)
           .translate([width/3,height/3]);
-// var projection = d3.geo.albersUsa()
-//         				.scale(730.1630554896399)
-//         				.translate([width/2, height/2]); //translate to center the map in view
-//
+
 
 var path = d3.geo.path()
         .projection(projection);
 
 var defs = svg.append("defs");
 
-var color = d3.scale.category20();
+// var color = d3.scale.category20();
 
 var arrowMarker = defs.append("marker")
 						.attr("id","arrow")
@@ -43,7 +40,9 @@ var arrow_path = "M2,2 L10,6 L2,10 L6,6 L2,2";
 
 arrowMarker.append("path")
 			.attr("d",arrow_path)
-			.attr("fill","tomato");
+			.attr("fill","tomato")
+
+
 
 var startMarker = defs.append("marker")
       .attr("id","startPoint")
@@ -59,7 +58,7 @@ startMarker.append("circle")
       			.attr("cx",6)
       			.attr("cy",6)
       			.attr("r",2)
-      			.attr("fill","tomato");
+      			// .attr("fill","tomato");
 
 svg.append("text")
             .text("Y3 real-time demo")
@@ -68,16 +67,36 @@ svg.append("text")
             .attr("text-anchor","middle")
 
 
-d3.json("asia.geojson", function(error, root) {
+// var zoom = d3.behavior.zoom()
+// 					   .translate(projection.translate())
+// 						 .scale(projection.scale())
+// 						 .scaleExtent([height, 2 * height])
+// 						 .on("zoom", zoomed);
+
+var zoom = d3.behavior.zoom().on('zoom', function() {
+						    g.attr('transform', 'translate(' + d3.event.translate.join(',') + ') scale(' + d3.event.scale + ')');
+						    //g.selectAll('path').attr('d', path.projection(projection));
+						  });
+
+var g = svg.append("g");
+// 					//  .call(zoom);
+//
+// g.append("rect")
+//           //  .attr("class", "background")
+// 					 .attr("width", width)
+// 					 .attr("height", height);
+
+
+d3.json("data/asia.geojson", function(error, root) {
   if (error)
     return console.error(error);
   console.log(root.features);
-
-  svg.selectAll("path")
+    g.append("g")
+    .selectAll("path")
     .data( root.features )
     .enter()
     .append("path")
-    .attr("stroke","lightgrey")
+    .attr("stroke","white")
     .attr("stroke-width",0.5)
     .attr("fill", "black")
     .attr("opacity",0.5)
@@ -87,16 +106,16 @@ d3.json("asia.geojson", function(error, root) {
 		// })
     .on("mouseover",function(d,i){
               d3.select(this)
-                  .attr("fill","darkgrey");
+                  .attr("fill","yellow");
           })
-          .on("mouseout",function(d,i){
+      .on("mouseout",function(d,i){
               d3.select(this)
                   .attr("fill","black")
                   .attr("opacity",0.5);
-          });
+          })
+			// .on("click",clicked);
 
-
-  var arcs = svg.append("g")
+  var arcs = g.append("g")
             .attr("class","arcs");
 
     arcs.selectAll("path")
@@ -142,12 +161,29 @@ function lngLatToArc(d, sourceName, targetName, bend){
 					dy = targetY - sourceY,
 					dr = Math.sqrt(dx * dx + dy * dy)*bend;
 
-			// To avoid a whirlpool effect, make the bend direction consistent regardless of whether the source is east or west of the target
-			// var west_of_source = (targetX - sourceX) < 0;
-			// if (west_of_source) return "M" + targetX + "," + targetY + "A" + dr + "," + dr + " 0 0,1 " + sourceX + "," + sourceY;
-			return "M" + sourceX + "," + sourceY + "A" + dr + "," + dr + " 0 0,1 " + targetX + "," + targetY;
+				return "M" + sourceX + "," + sourceY + "A" + dr + "," + dr + " 0 0,1 " + targetX + "," + targetY;
 
 		} else {
 			return "M0,0,l0,0z";
 		}
 	}
+
+// 	function clicked(d) {
+//   var centroid = path.centroid(d),
+//       translate = projection.translate();
+//
+//   projection.translate([
+//     translate[0] - centroid[0] + width / 2,
+//     translate[1] - centroid[1] + height / 2
+//   ]);
+//
+//   zoom.translate(projection.translate());
+//
+//   g.selectAll("path").transition()
+//       .duration(700)
+//       .attr("d", path);
+// }
+
+
+
+svg.call(zoom);
