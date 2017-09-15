@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "start": "./node_modules/http-server/bin/http-server . -o"
+    "start": "./node_modules/gulp/bin/gulp.js -f ../../../gulpfile.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/rainymayday/mapvisuals#readme",
   "devDependencies": {
+    "gulp": "^3.9.1",
     "http-server": "^0.10.0"
   }
 }
