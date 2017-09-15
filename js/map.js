@@ -72,7 +72,7 @@ var div = d3.select("#map")
     		.style("opacity", 0);
 
 
-d3.json("data/asia.geojson", function(error, root) {
+d3.json("data/panasia.geojson", function(error, root) {
   if (error)
     return console.error(error);
   console.log(root.features);
@@ -88,11 +88,12 @@ d3.json("data/asia.geojson", function(error, root) {
     .attr("d", path )
     .on("mouseover",function(d){
               d3.select(this)
-                  .attr("fill","yellow");
+                .attr("fill","yellow");
+
 							div.transition()
 		      	   .duration(200)
 		           .style("opacity", .9);
-		           div.html(d.properties.name+"<br/>"+d.properties.admin)
+		           div.html(d.properties.SOVEREIGNT)
 		           .style("left", (d3.event.pageX) + "px")
 		           .style("top", (d3.event.pageY - 28) + "px");
           })
@@ -117,24 +118,31 @@ d3.json("data/asia.geojson", function(error, root) {
 						// .attr("fill", "green")
 						.attr("transform",function(d) {
 							return "translate(" + projection([d.Long,d.Lat]) + ")";
+						})
+						.on("mouseover",function(d){
+							div.transition()
+		      	   .duration(20)
+		           .style("opacity", .9);
+		           div.html(d.Country+"<br>"+d.Address)
+		           .style("left", (d3.event.pageX) + "px")
+		           .style("top", (d3.event.pageY - 28) + "px");
 						});
-
-													// g.selectAll(".mark")
-													// .data(location)
-					  							// .enter()
-											    // .append("image")
-											    // .attr('class','mark')
-											    // .attr('width', 20)
-											    // .attr('height', 20)
-											    // .attr("xlink:href",'https://cdn3.iconfinder.com/data/icons/softwaredemo/PNG/24x24/DrawingPin1_Blue.png')
-											    // .attr("transform",function(d) {
-													// 	return "translate(" + projection([d.Long,d.Lat]) + ")";
-													// });
-
 					});
 
+					g.append("g")
+				            .attr("class","arcs")
+										.selectAll("path")
+										.data(arcdata)
+										.enter()
+										.append("path")
+										.style("stroke","purple")
+										.attr('d', function(d) {
+															return lngLatToArc(d, 'sourceLocation', 'targetLocation', 5);})
 
-timeForTimeline();
+
+					timeForTimeline();
+
+
 });
 
 
@@ -146,18 +154,23 @@ function timeForTimeline(){ // har
 							.enter()
 							.append("path")
 							.attr('d', function(d) {
-												return lngLatToArc(d, 'sourceLocation', 'targetLocation', 60);});
+												return lngLatToArc(d, 'sourceLocation', 'targetLocation', 5);});
     repeat();
     function repeat() {
 
-		// .attr("marker-start","url(#startPoint)")
+		// attr("marker-start","url(#startPoint)")
 	  // .attr("marker-end","url(#arrow)")
 		timeline.style("stroke-dasharray", "1000, 1000")
+		// .style("stroke","tomato")
+		// .style("opacity", 50)
 		.transition()
 		.duration(2000)
-		.styleTween("stroke-dashoffset", function() {
-	 return d3.interpolateNumber(1000, 0);})
-    .each("end", repeat);
+		.styleTween("stroke",function(){
+			return d3.interpolate("plum","purple")
+		})
+	// 	.styleTween("stroke-dashoffset", function() {
+	//  return d3.interpolateNumber(1000, 0);})
+	.each("end", repeat);
 };
 };
 
