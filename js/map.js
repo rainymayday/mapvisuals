@@ -129,15 +129,15 @@ d3.json("data/panasia.geojson", function(error, root) {
 						});
 					});
 
-					g.append("g")
-				            .attr("class","arcs")
-										.selectAll("path")
-										.data(arcdata)
-										.enter()
-										.append("path")
-										.style("stroke","purple")
-										.attr('d', function(d) {
-															return lngLatToArc(d, 'sourceLocation', 'targetLocation', 5);})
+					// g.append("g")
+				  //           .attr("class","arcs")
+					// 					.selectAll("path")
+					// 					.data(arcdata)
+					// 					.enter()
+					// 					.append("path")
+					// 					.style("stroke","purple")
+					// 					.attr('d', function(d) {
+					// 										return lngLatToArc(d, 'sourceLocation', 'targetLocation', 5);})
 
 
 					timeForTimeline();
@@ -161,15 +161,17 @@ function timeForTimeline(){ // har
 		// attr("marker-start","url(#startPoint)")
 	  // .attr("marker-end","url(#arrow)")
 		timeline.style("stroke-dasharray", "1000, 1000")
-		// .style("stroke","tomato")
+		.style("stroke","purple")
 		// .style("opacity", 50)
 		.transition()
+		.delay(500)
 		.duration(2000)
-		.styleTween("stroke",function(){
-			return d3.interpolate("plum","purple")
-		})
-	// 	.styleTween("stroke-dashoffset", function() {
-	//  return d3.interpolateNumber(1000, 0);})
+		// .styleTween("stroke",function(){
+		// 	return d3.interpolate("plum","purple")
+		// })
+		.style("stroke","plum")
+		.styleTween("stroke-dashoffset", function() {
+	 return d3.interpolateNumber(1000, 0);})
 	.each("end", repeat);
 };
 };
