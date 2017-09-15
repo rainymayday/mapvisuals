@@ -7,11 +7,6 @@ var arcdata = [
 			sourceLocation:[103.640949, 1.323385]
 		}  ]
 
-var marks = [
-	{long: 78.963239, lat: 20.821930},
-	{long: 117.525544, lat: 38.838788},
-	{long: 100.462383, lat: 5.371320}];
-
 var svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -57,7 +52,7 @@ var startMarker = defs.append("marker")
 startMarker.append("circle")
       			.attr("cx",6)
       			.attr("cy",6)
-      			.attr("r",2)
+      			.attr("r",1)
 
 svg.append("text")
             .text("Y3 real-time demo")
@@ -67,10 +62,15 @@ svg.append("text")
 
 var zoom = d3.behavior.zoom().on('zoom', function() {
 						    g.attr('transform', 'translate(' + d3.event.translate.join(',') + ') scale(' + d3.event.scale + ')');
-						    //g.selectAll('path').attr('d', path.projection(projection));
 						  });
 
 var g = svg.append("g");
+
+var div = d3.select("#map")
+		    .append("div")
+    		.attr("class", "tooltip")
+    		.style("opacity", 0);
+
 
 d3.json("data/asia.geojson", function(error, root) {
   if (error)
@@ -86,26 +86,45 @@ d3.json("data/asia.geojson", function(error, root) {
     .attr("fill", "black")
     .attr("opacity",0.5)
     .attr("d", path )
-    .on("mouseover",function(d,i){
+    .on("mouseover",function(d){
               d3.select(this)
                   .attr("fill","yellow");
+							div.transition()
+		      	   .duration(200)
+		           .style("opacity", .9);
+		           div.html(d.properties.name+"<br/>"+d.properties.admin)
+		           .style("left", (d3.event.pageX) + "px")
+		           .style("top", (d3.event.pageY - 28) + "px");
           })
-      .on("mouseout",function(d,i){
+      .on("mouseout",function(d){
               d3.select(this)
                   .attr("fill","black")
                   .attr("opacity",0.5);
+							div.transition()
+		           .duration(500)
+		           .style("opacity", 0);
           });
 
+					d3.csv("data/warehouse.csv", function(error, location){
+						if (error)
+					    return console.error(error);
+					  console.log(root.features);
+													g.selectAll(".mark")
+													.data(location)
+					  							.enter()
+											    .append("image")
+											    .attr('class','mark')
+											    .attr('width', 20)
+											    .attr('height', 20)
+											    .attr("xlink:href",'https://cdn3.iconfinder.com/data/icons/softwaredemo/PNG/24x24/DrawingPin1_Blue.png')
+											    .attr("transform",function(d) {
+														return "translate(" + projection([d.Long,d.Lat]) + ")";
+													});
+
+					});
+
+
 timeForTimeline();
-g.selectAll(".mark")
-						    .data(marks)
-						    .enter()
-						    .append("image")
-						    .attr('class','mark')
-						    .attr('width', 20)
-						    .attr('height', 20)
-						    .attr("xlink:href",'https://cdn3.iconfinder.com/data/icons/softwaredemo/PNG/24x24/DrawingPin1_Blue.png')
-						    .attr("transform", function(d) {return "translate(" + projection([d.long,d.lat]) + ")";});
 });
 
 
@@ -132,7 +151,6 @@ function timeForTimeline(){ // har
 };
 
 function lngLatToArc(d, sourceName, targetName, bend){
-		// If no bend is supplied, then do the plain square root
 		bend = bend || 1;
 
 		var sourceLngLat = d[sourceName],

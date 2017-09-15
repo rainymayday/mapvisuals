@@ -1,15 +1,3 @@
-var data = [
-  { "date" : "2013-01-01", "close" : 45 },
-  { "date" : "2013-02-01", "close" : 50 },
-	{ "date" : "2013-03-01", "close" : 55 },
-	{ "date" : "2013-04-01", "close" : 50 },
-	{ "date" : "2013-05-01", "close" : 45 },
-	{ "date" : "2013-06-01", "close" : 50 },
-	{ "date" : "2013-07-01", "close" : 50 },
-	{ "date" : "2013-08-01", "close" : 55 }
-]
-
-
 
   function tabulate(data, columns) {
 		var table = d3.select('#table').append('table')
@@ -43,5 +31,7 @@ var data = [
 	  return table;
 	}
 
-	// render the table(s)
-	tabulate(data, ['date', 'close']); // 2 column table
+	  d3.json("data/tabledata.json", function(error, data) {
+    tabulate(data, ['date', 'close']);
+
+  });
