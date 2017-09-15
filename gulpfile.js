@@ -5,9 +5,13 @@ gulp.task('browser-sync', function() {
   browserSync({
     server: {
        baseDir: "./",
-       index: "test.html"
+       index: "pointRunOnLine.html"
     }
   });
+});
+
+gulp.task('bs-reload', function () {
+  browserSync.reload();
 });
 
 gulp.task('default', ['browser-sync'], function(){
