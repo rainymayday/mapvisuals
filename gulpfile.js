@@ -10,10 +10,6 @@ gulp.task('browser-sync', function() {
   });
 });
 
-gulp.task('bs-reload', function () {
-  browserSync.reload();
-});
-
 gulp.task('default', ['browser-sync'], function(){
-  gulp.watch(["**/*.html","**/*.js","**/*.json","**/*.csv","**/*.geojson","**/*.css"], ['bs-reload']);
+  gulp.watch(["*.html","js/*.js","css/*.css","data/*.csv","data/*.json","data/*.geojson"], ['bs-reload']);
 });

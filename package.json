@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/rainymayday/mapvisuals#readme",
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "http-server": "^0.10.0"
+    "browser-sync": "^2.18.13",
+    "gulp": "^3.9.1"
   }
 }
