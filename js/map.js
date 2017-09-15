@@ -109,17 +109,27 @@ d3.json("data/asia.geojson", function(error, root) {
 						if (error)
 					    return console.error(error);
 					  console.log(root.features);
-													g.selectAll(".mark")
-													.data(location)
-					  							.enter()
-											    .append("image")
-											    .attr('class','mark')
-											    .attr('width', 20)
-											    .attr('height', 20)
-											    .attr("xlink:href",'https://cdn3.iconfinder.com/data/icons/softwaredemo/PNG/24x24/DrawingPin1_Blue.png')
-											    .attr("transform",function(d) {
-														return "translate(" + projection([d.Long,d.Lat]) + ")";
-													});
+
+						g.selectAll("circle")
+						.data(location).enter()
+						.append("circle")
+						.attr("r", "2.5px")
+						// .attr("fill", "green")
+						.attr("transform",function(d) {
+							return "translate(" + projection([d.Long,d.Lat]) + ")";
+						});
+
+													// g.selectAll(".mark")
+													// .data(location)
+					  							// .enter()
+											    // .append("image")
+											    // .attr('class','mark')
+											    // .attr('width', 20)
+											    // .attr('height', 20)
+											    // .attr("xlink:href",'https://cdn3.iconfinder.com/data/icons/softwaredemo/PNG/24x24/DrawingPin1_Blue.png')
+											    // .attr("transform",function(d) {
+													// 	return "translate(" + projection([d.Long,d.Lat]) + ")";
+													// });
 
 					});
 
@@ -136,12 +146,13 @@ function timeForTimeline(){ // har
 							.enter()
 							.append("path")
 							.attr('d', function(d) {
-												return lngLatToArc(d, 'sourceLocation', 'targetLocation', 5);});
+												return lngLatToArc(d, 'sourceLocation', 'targetLocation', 60);});
     repeat();
     function repeat() {
-    timeline.attr("marker-start","url(#startPoint)")
-	  .attr("marker-end","url(#arrow)")
-		.style("stroke-dasharray", "1000, 1000")
+
+		// .attr("marker-start","url(#startPoint)")
+	  // .attr("marker-end","url(#arrow)")
+		timeline.style("stroke-dasharray", "1000, 1000")
 		.transition()
 		.duration(2000)
 		.styleTween("stroke-dashoffset", function() {

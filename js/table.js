@@ -32,6 +32,6 @@
 	}
 
 	  d3.json("data/tabledata.json", function(error, data) {
-    tabulate(data, ['date', 'close']);
+    tabulate(data, ['Market', 'Order No.','Date/Time']);
 
   });
