@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "start": "./node_modules/gulp/bin/gulp.js -f ../../../gulpfile.js"
+    "start": "node ./node_modules/gulp/bin/gulp.js -f ../../../gulpfile.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,10 @@
   },
   "homepage": "https://github.com/rainymayday/mapvisuals#readme",
   "devDependencies": {
-    "browser-sync": "^2.18.13",
-    "gulp": "^3.9.1"
+    "bootstrap": "3.3.7",
+    "browser-sync": "2.18.13",
+    "d3": "^3.5.12",
+    "gulp": "^3.9.1",
+    "jquery": "3.2.1"
   }
 }
