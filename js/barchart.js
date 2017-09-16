@@ -80,7 +80,8 @@ $(function () {
 
     bar.selectAll("rect").on("mousemove", function (d) {
         d3.select(this)
-            .attr("fill", "yellow");
+            .attr("fill", "yellow")
+            .attr("opacity",0.9);
         d3.select("div.tooltip").html(d.label + "<br>" + d.value + "%")
             .style("opacity", ".9")
             .style("left", (d3.event.pageX) + "px")

@@ -1,6 +1,7 @@
 $(function () {
     var width = $("#mapContainer").width();
     var height = 500;
+    var projection,path;
 
     var arcdata = [
         {
@@ -12,48 +13,10 @@ $(function () {
         .attr("width", width)
         .attr("height", height)
         .append("g")
-        .attr("transform", "translate(0,0)");
+        .attr("transform", "translate(0,0)")
+        .attr("id","mapsvg");
 
-    var projection = d3.geo.mercator()
-        .center([116.4074, 39.9042])
-        .scale(500)
-        .translate([width / 3, height / 3]);
 
-    var path = d3.geo.path()
-        .projection(projection);
-
-    var defs = svg.append("defs");
-
-    var arrowMarker = defs.append("marker")
-        .attr("id", "arrow")
-        .attr("markerUnits", "strokeWidth")
-        .attr("markerWidth", "12")
-        .attr("markerHeight", "12")
-        .attr("viewBox", "0 0 12 12")
-        .attr("refX", "6")
-        .attr("refY", "6")
-        .attr("orient", "auto");
-
-    var arrow_path = "M2,2 L10,6 L2,10 L6,6 L2,2";
-
-    arrowMarker.append("path")
-        .attr("d", arrow_path)
-        .attr("fill", "tomato")
-
-    var startMarker = defs.append("marker")
-        .attr("id", "startPoint")
-        .attr("markerUnits", "strokeWidth")
-        .attr("markerWidth", "12")
-        .attr("markerHeight", "12")
-        .attr("viewBox", "0 0 12 12")
-        .attr("refX", "6")
-        .attr("refY", "6")
-        .attr("orient", "auto");
-
-    startMarker.append("circle")
-        .attr("cx", 6)
-        .attr("cy", 6)
-        .attr("r", 1)
 
     var zoom = d3.behavior.zoom().on('zoom', function () {
         g.attr('transform', 'translate(' + d3.event.translate.join(',') + ') scale(' + d3.event.scale + ')');
@@ -65,6 +28,33 @@ $(function () {
         if (error)
             return console.error(error);
         console.log(root.features);
+        // var center = d3.geo.centroid(root)
+        var center = [90.4074, 35.9042];
+        var scale  = 370;
+        var offset = [width/3, height/3];
+        //104.4074, 36.9042
+        projection = d3.geo.mercator()
+            .center(center)
+            .scale(scale)
+            .translate(offset);
+
+        path = d3.geo.path()
+            .projection(projection);
+
+          // var bounds  = path.bounds(root);
+          // var hscale  = scale*width  / (bounds[1][0] - bounds[0][0]);
+          // var vscale  = scale*height / (bounds[1][1] - bounds[0][1]);
+          // var scale   = (hscale < vscale) ? hscale : vscale;
+          // var offset  = [width - (bounds[0][0] + bounds[1][0])/2,
+          //                   height - (bounds[0][1] + bounds[1][1])/2];
+          //
+          // // new projection
+          // projection = d3.geo.mercator().center(center)
+          //   .scale(scale).translate(offset);
+          // path = path.projection(projection);
+          g.append("rect").attr('width', width).attr('height', height)
+        .style('stroke', 'black').style('fill', 'none');
+
         g.append("g")
             .selectAll("path")
             .data(root.features)
@@ -102,7 +92,6 @@ $(function () {
                 .data(location).enter()
                 .append("circle")
                 .attr("r", "2.5px")
-                // .attr("fill", "green")
                 .attr("transform", function (d) {
                     return "translate(" + projection([d.Long, d.Lat]) + ")";
                 })
@@ -115,21 +104,7 @@ $(function () {
                         .style("top", (d3.event.pageY - 28) + "px");
                 });
         });
-
-        // g.append("g")
-        //           .attr("class","arcs")
-        // 					.selectAll("path")
-        // 					.data(arcdata)
-        // 					.enter()
-        // 					.append("path")
-        // 					.style("stroke","purple")
-        // 					.attr('d', function(d) {
-        // 										return lngLatToArc(d, 'sourceLocation', 'targetLocation', 5);})
-
-
         timeForTimeline();
-
-
     });
 
 
