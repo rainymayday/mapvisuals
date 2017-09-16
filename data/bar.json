@@ -1,0 +1,21 @@
+[{
+    "subject": "China",
+    "value": 10,
+    "color":"#0000b4"
+}, {
+    "subject": "Singapore",
+    "value": 25,
+    "color":"#0082ca"
+}, {
+    "subject": "Malaysia",
+    "value": 5,
+    "color":"#0094ff"
+}, {
+    "subject": "India",
+    "value": 12,
+    "color":"#0d4bcf"
+}, {
+    "subject": "HongKong",
+    "value": 5,
+    "color":"#0066AE"
+} ]

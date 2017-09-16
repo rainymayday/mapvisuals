@@ -66,13 +66,7 @@ var zoom = d3.behavior.zoom().on('zoom', function() {
 
 var g = svg.append("g");
 
-var div = d3.select("#map")
-		    .append("div")
-    		.attr("class", "tooltip")
-    		.style("opacity", 0);
-
-
-d3.json("data/panasia.geojson", function(error, root) {
+d3.json("data/panasia1.geojson", function(error, root) {
   if (error)
     return console.error(error);
   console.log(root.features);
@@ -86,14 +80,13 @@ d3.json("data/panasia.geojson", function(error, root) {
     .attr("fill", "black")
     .attr("opacity",0.5)
     .attr("d", path )
-    .on("mouseover",function(d){
+    .on("mousemove",function(d){
               d3.select(this)
                 .attr("fill","yellow");
-
-							div.transition()
+							d3.select("div.tooltip").transition()
 		      	   .duration(200)
 		           .style("opacity", .9);
-		           div.html(d.properties.SOVEREIGNT)
+		           d3.select("div.tooltip").html(d.properties.SOVEREIGNT)
 		           .style("left", (d3.event.pageX) + "px")
 		           .style("top", (d3.event.pageY - 28) + "px");
           })
@@ -101,7 +94,7 @@ d3.json("data/panasia.geojson", function(error, root) {
               d3.select(this)
                   .attr("fill","black")
                   .attr("opacity",0.5);
-							div.transition()
+							d3.select("div.tooltip").transition()
 		           .duration(500)
 		           .style("opacity", 0);
           });
@@ -109,7 +102,6 @@ d3.json("data/panasia.geojson", function(error, root) {
 					d3.csv("data/warehouse.csv", function(error, location){
 						if (error)
 					    return console.error(error);
-					  console.log(root.features);
 
 						g.selectAll("circle")
 						.data(location).enter()
@@ -120,10 +112,10 @@ d3.json("data/panasia.geojson", function(error, root) {
 							return "translate(" + projection([d.Long,d.Lat]) + ")";
 						})
 						.on("mouseover",function(d){
-							div.transition()
+							d3.select("div.tooltip").transition()
 		      	   .duration(20)
 		           .style("opacity", .9);
-		           div.html(d.Country+"<br>"+d.Address)
+		           d3.select("div.tooltip").html(d.Country+"<br>"+d.Address)
 		           .style("left", (d3.event.pageX) + "px")
 		           .style("top", (d3.event.pageY - 28) + "px");
 						});

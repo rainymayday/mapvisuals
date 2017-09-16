@@ -8,12 +8,12 @@
     fill: Chartreuse ;
 
   }
-  text{
+  /*text{
     font-size: 18px;
     text-align: center;
     fill: white;
     font-weight: bold;
-  }
+  }*/
   body{
     background-color: rgb(64,74,89);
     /*background-color: black;*/
@@ -29,8 +29,9 @@
 	border: 0px;
 	border-radius: 8px;
 	pointer-events: none;
+  opacity: 0.9;
 }
-table {
+div.table {
     border-collapse: collapse;
 }
 table,th,td{
@@ -40,8 +41,14 @@ table,th,td{
 }
 /*tr:nth-child(even){
   background-color: #4CAF50}*/
-
 th {
     background-color: #23385e;
     color: white;
+}
+#xaxis .domain {
+  fill:none;
+  stroke:#000;
+}
+#xaxis text, #yaxis text {
+  font-size: 12px;
 }
