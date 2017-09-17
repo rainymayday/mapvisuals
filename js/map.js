@@ -4,10 +4,10 @@ $(function () {
     var projection,path,arcs;
 
     var arcdata = [
-      //   {
-      //       targetLocation: [100.292530, 5.307970],
-      //       sourceLocation: [103.640949, 1.323385]
-      //   },
+        {
+            targetLocation: [100.292530, 5.307970],
+            sourceLocation: [103.640949, 1.323385]
+        },
       {
         targetLocation: [116.4074,39.9042],
         sourceLocation: [103.640949, 1.323385]
@@ -50,7 +50,7 @@ $(function () {
             .projection(projection);
 
           // reference triangle
-          g.append("rect").attr('width', width).attr('height', height)
+        g.append("rect").attr('width', width).attr('height', height)
         .style('stroke', 'black').style('fill', 'none');
 
         g.append("g")
@@ -89,21 +89,7 @@ $(function () {
                 .append("path")
                 .attr('d', function (d) {
                     return lngLatToArc(d, 'sourceLocation', 'targetLocation', 5);
-                })
-                .call(transition);
-
-         var startPoint = pathStartPoint(arcs);
-        //  var circleNum = d3.range(3);
-         var marker = svg.append("circle");
-                      // .data(circleNum)
-                      // .enter()
-
-                      // .classed(circleNum, true);
-         marker.attr("r", 3)
-           .attr("id", "marker")
-           .style("fill","yellow")
-           .style("opacity",0.9)
-           .attr("transform", "translate(" + startPoint + ")");
+                });
 
 
         d3.csv("data/warehouse.csv", function (error, location) {
@@ -127,25 +113,7 @@ $(function () {
                 });
         });
         timeForTimeline();
-        function transition(arcs) {
-          console.log(arcs);
-          arcs.transition()
-              .duration(5000)
-              .ease("linear")
-              // .attrTween("transform", function(d){ return translateAlong(d.arcs)() })
-              // .each("end", transition);
-              .attrTween("stroke", tweenDash)
-              .each("end", function() { d3.select(this).call(transition); }); //infinite loop
-        }
-//         function translateAlong(arcs) {
-//           var l = arcs.getTotalLength();
-//           return function(d, i, a) {
-//             return function(t) {
-//               var p = arcs.getPointAtLength(t * l);
-//               return "translate(" + p.x + "," + p.y + ")";
-//     };
-//   };
-// }
+      
     });
 
 
@@ -173,7 +141,6 @@ $(function () {
                 })
                 .each("end", repeat);
         };
-
 
     };
 
@@ -203,23 +170,7 @@ $(function () {
             return "M0,0,l0,0z";
         }
     }
-    function pathStartPoint(path) {
-      var d = arcs.attr("d"),
-      dsplitted = d.split(" ");
-      return dsplitted[1];
-    }
 
-    //
-    //
-    function tweenDash() {
-      var l = arcs.node().getTotalLength();
-      return function(t) {
-        var marker = d3.select("#marker");
-        var p = arcs.node().getPointAtLength(t * l);
-        marker.attr("transform", "translate(" + p.x + "," + p.y + ")");
-        return "purple";
-      }
-    }
 
 
 

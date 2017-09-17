@@ -54,14 +54,54 @@ $(function () {
         .range([0, width - margin * 2 - labelWidth]);
 
 
-    bar.append("rect")
+var rect = bar.append("rect")
         .attr("transform", "translate(" + labelWidth + ", 0)")
         .attr("height", barHeight)
         .attr("width", function (d) {
-            return scale(d.value);
+            // return scale(d.value);
+            return 0;
         })
-        .attr("fill", "lightblue");
+        .attr("fill", "lightblue")
+        .on("mousemove", function (d) {
+           d3.select(this)
+               .attr("fill", "yellow")
+               .attr("opacity",0.9);
+           d3.select("div.tooltip").html(d.label + "<br>" + d.value )
+               .style("opacity", ".9")
+               .style("left", (d3.event.pageX) + "px")
+               .style("top", (d3.event.pageY - 50) + "px");
+       })
+           .on("mouseout", function (d) {
+               d3.select(this)
+                   .attr("fill", "lightblue");
+               d3.select("div.tooltip").transition()
+                   .duration(500)
+                   .style("opacity", 0);
+           });
+risingBar(rect);
+//ease function
+// "linear-in-out",
+//       "quad-in-out",
+//       "cubic-in-out",
+//       "sin-in-out",
+//       "exp-in-out",
+//       "circle-in-out",
+//       "elastic-in-out",
+//       "back-in-out",
+//       "bounce-in-out"
+function risingBar(var_rect){
+  var_rect.attr("fill", "lightblue")
+  .transition()
+  .duration(4000)
+  .ease("exp-in-out")
+  .attr("width",function(d){
+    return scale(d.value);
+  }).each("end",function(d){
+    var_rect.attr("width",0);
+    risingBar(var_rect);
+  });
 
+}
 
     bar.append("text")
         .attr("class", "value")
@@ -78,23 +118,6 @@ $(function () {
         });
 
 
-    bar.selectAll("rect").on("mousemove", function (d) {
-        d3.select(this)
-            .attr("fill", "yellow")
-            .attr("opacity",0.9);
-        d3.select("div.tooltip").html(d.label + "<br>" + d.value )
-            .style("opacity", ".9")
-            .style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY - 50) + "px");
-    })
-        .on("mouseout", function (d) {
-            d3.select(this)
-                .attr("fill", "lightblue");
-            d3.select("div.tooltip").transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
-//add reference
         svg.append("rect").attr('width', width).attr('height', height)
       .style('stroke', 'black').style('fill', 'none');
 
