@@ -1,8 +1,11 @@
+var width = $("#barchartContainer").width(),
+height = 350;
 
   function tabulate(data, columns) {
 		var table = d3.select('#table').append('table')
 		var thead = table.append('thead')
 		var	tbody = table.append('tbody');
+    
 
 		// append the header row
 		thead.append('tr')

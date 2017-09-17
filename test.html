@@ -1,139 +1,60 @@
 <html>
   <head>
-    <script src="lib/d3.min.js"></script>
-    <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
-    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <script src="node_modules\d3\d3.js"></script>
+      <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
         <meta charset="utf-8">
-        <title>Mapvisuals</title>
-        <style>
-        body {
-    font: 14px/1.45 Helvetica;
-}
-.axis path, .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-}
-
-        </style>
+        <title>PointRunonLine</title>
     <!-- <link rel='stylesheet' href='css/style.css'> -->
   </head>
 <body>
-  <div id="chart" width = "500"></div>
-<script>
-  var data = [{
-      subject: 'China',
-      value: 10,
-      color:"#0000b4"
-  }, {
-      subject: 'Singapore',
-      value: 25,
-      color:"#0082ca"
-  }, {
-      subject: 'Malaysia',
-      value: 5,
-      color:"#0094ff"
-  }, {
-      subject: 'India',
-      value: 12,
-      color:"#0d4bcf"
-  }, {
-      subject: 'HongKong',
-      value: 5,
-      color:"#0066AE"
-  }];
 
-  // Dimensions
-  var margin = {
-      top: 20,
-      right: 0,
-      bottom: 20,
-      left: 100
-  },
-  width = parseInt(d3.select('#chart').style('width'), 10),
-      width = width - margin.left - margin.right,
-      height = 250 - margin.top - margin.bottom,
-      barHeight = 20,
-      percent = d3.format('%');
+<script type='text/javascript'>
+var svg = d3.select("body")
+    .append("svg")
+    .attr("width",500)
+    .attr("height",500);
 
-  // Create the scale for the axis
-  var xScale = d3.scale.linear()
-      .range([0, width]); // the pixel range to map to
+var path = svg.append("path")
+   .attr("d","M 100 350 q 150 -300 300 0")
+   .attr("fill","none")
+   .attr("stroke","black")
+   .attr("stroke-width",5)
+   .call(transition);
 
-  var yScale = d3.scale.ordinal()
-      // SECOND PARAM IS PADDING
-      .rangeRoundBands([0, height], 0.5);
+var startPoint = pathStartPoint(path);
 
-  //Create the axis
-  var colorScale = d3.scale.quantize()
-          .domain([0,data.length])
-  	.range(data.map(function (d) {
-      return d.color;
-  }));
-
-  var yAxis = d3.svg.axis()
-      .scale(yScale)
-      .orient('left');
-
-  xScale.domain([0,
-     d3.max(data, function (d) {
-            return d.value;
-        })]);
-
-  yScale.domain(data.map(function (d) {
-      return d.subject;
-  }));
-
-  // Render the SVG
-  var svg = d3.select('#chart')
-      .append('svg')
-      .attr('height', height + margin.top + margin.bottom)
-      .attr("width", width + margin.left + margin.right)
-      .append('g') // Group the content and add margin
-  .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-  // Render the axis
-
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis);
-
-  // Render the bars
-  svg.selectAll('.bar')
-      .data(data)
-      .enter()
-      .append('rect')
-      .attr('class', 'bar')
-      .attr('y', function (d) {
-      return yScale(d.subject);
-  })
-      .attr('width', function (d) {
-      return 0;
-  })
-      // REPLACE barHeight WITH RANGE BAND
-      .attr('height', yScale.rangeBand)
-      .style('fill',function(d,i){ return colorScale(i); });
+  var marker = svg.append("circle");
+  marker.attr("r", 3)
+    .attr("id", "marker")
+    .style("fill","yellow")
+    .style("opacity",0.9)
+    .attr("transform", "translate(" + startPoint + ")");
 
 
-  var transit = d3.select("svg").selectAll("rect")
-              .data(data)
-              .transition()
-              .duration(1000)
-              .attr("width", function(d) {return xScale(d.value); });
+  function pathStartPoint(path) {
+    var d = path.attr("d"),
+    dsplitted = d.split(" ");
+    return dsplitted[1];
+  }
 
+  function transition(path) {
+    path.transition()
+        .duration(1500)
+        .attrTween("stroke", tweenDash)
+        .each("end", function() { d3.select(this).call(transition); }); //infinite loop
+  }
 
-
-  var transitext = d3.select('#chart')
-                     .selectAll('text')
-                     .data(data)
-                     .enter()
-                     .append('text')
-                    .attr({'x':function(d) {return xScale(d.value);},
-                    'y':function(d){ return yScale(d.subject);}})
-                    .text(function(d){ return d.value; })
-                    .style({'fill':'#fff','font-size':'14px'});
-
-
+  function tweenDash() {
+    var l = path.node().getTotalLength();
+    return function(t) {
+      var marker = d3.select("#marker");
+      var p = path.node().getPointAtLength(t * l);
+      marker.attr("transform", "translate(" + p.x + "," + p.y + ")");
+      return "black";
+    }
+  }
 </script>
+
 
 </body>
 </html>

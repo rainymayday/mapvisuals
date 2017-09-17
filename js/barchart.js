@@ -1,19 +1,19 @@
 $(function () {
     data = [
-        {label: "Category 1", value: 19},
-        {label: "Category 2", value: 5},
-        {label: "Category 3", value: 13},
-        {label: "Category 4", value: 17},
-        {label: "Category 5", value: 19},
-        {label: "Category 6", value: 27}
+        {label: "Singapore", value: 19},
+        {label: "China", value: 5},
+        {label: "India", value: 13},
+        {label: "Malaysia", value: 17},
+        {label: "Hong Kong", value: 19},
+        {label: "Indonesia", value: 27}
     ];
 
 
-    var axisMargin = 20,
-        margin = 40,
-        valueMargin = 20,
+    var axisMargin = 10,
+        margin = 10,
+        valueMargin = 10,
         width = $("#barchartContainer").width(),
-        height = 350,
+        height = 250,
         barHeight = (height - axisMargin - margin * 2) * 0.4 / data.length,
         barPadding = (height - axisMargin - margin * 2) * 0.6 / data.length,
         data, bar, svg, scale, xAxis, labelWidth = 0;
@@ -70,7 +70,7 @@ $(function () {
         .attr("dy", ".35em") //vertical align middle
         .attr("text-anchor", "end")
         .text(function (d) {
-            return (d.value + "%");
+            return (d.value );
         })
         .attr("x", function (d) {
             var width = this.getBBox().width;
@@ -82,7 +82,7 @@ $(function () {
         d3.select(this)
             .attr("fill", "yellow")
             .attr("opacity",0.9);
-        d3.select("div.tooltip").html(d.label + "<br>" + d.value + "%")
+        d3.select("div.tooltip").html(d.label + "<br>" + d.value )
             .style("opacity", ".9")
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY - 50) + "px");
@@ -94,5 +94,8 @@ $(function () {
                 .duration(500)
                 .style("opacity", 0);
         });
+//add reference
+        svg.append("rect").attr('width', width).attr('height', height)
+      .style('stroke', 'black').style('fill', 'none');
 
 });
