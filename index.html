@@ -1,22 +1,52 @@
-<html>
-  <head>
-    <script src="lib/d3.min.js"></script>
-    <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
-    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-        <meta charset="utf-8">
-        <title>Mapvisuals</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mapvisuals</title>
+    <link href="node_modules\bootstrap\dist\css\bootstrap.css" rel="stylesheet">
     <link rel='stylesheet' href='css/style.css'>
-  </head>
+
+</head>
 <body>
-  <div id = "map"></div>
-  <div id="barchart"></div>
-  <div id = "table"></div>
-  <div class="tooltip"></div>
-
-<script type='text/javascript'src='js/map.js'></script>
-<script type='text/javascript'src='js/barchart.js'></script>
-<script type='text/javascript'src='js/table.js'></script>
-
-
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron text-center">
+                <h2>Y3 real time dashboard</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h3>This is card section</h3
+                  
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" id="barchartContainer">
+            <div id="barchart">
+            </div>
+            <div id="table"></div>
+            </div>
+        <div class="col-md-6" id="mapContainer">
+            <div id="map"></div>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+</div>
+<div class="tooltip"></div>
 </body>
+
+<script src="node_modules\d3\d3.js"></script>
+<script src="node_modules\jquery\dist\jquery.slim.js"></script>
+<!-- <script src="lib/d3.min.js"></script> -->
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script type='text/javascript' src='js/map.js'></script>
+<script type='text/javascript' src='js/barchart.js'></script>
+<script type='text/javascript' src='js/table.js'></script>
 </html>

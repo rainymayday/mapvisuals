@@ -5,7 +5,7 @@ gulp.task('browser-sync', function() {
   browserSync({
     server: {
        baseDir: "./",
-       index: "bootstrap.html"
+       index: "index.html"
     }
   });
 });
