@@ -39,10 +39,11 @@ $(function () {
             return "translate(" + margin + "," + (i * (barHeight + barPadding) + barPadding) + ")";
         });
 
-    bar.append("text")
+  var x_label = bar.append("text")
         .attr("class", "label")
         .attr("y", barHeight / 2)
-        .attr("dy", ".35em") //vertical align middle
+        .attr("dy", ".35em")
+        .attr("fill","white") //vertical align middle
         .text(function (d) {
             return d.label;
         }).each(function () {
@@ -52,7 +53,10 @@ $(function () {
     scale = d3.scale.linear()
         .domain([0, max])
         .range([0, width - margin * 2 - labelWidth]);
+  defs = svg.append("defs")
 
+            //Create two separate gradients for the main and mini bar - just because it looks fun
+  createGradient("gradient-rainbow-main", "60%");
 
 var rect = bar.append("rect")
         .attr("transform", "translate(" + labelWidth + ", 0)")
@@ -61,7 +65,7 @@ var rect = bar.append("rect")
             // return scale(d.value);
             return 0;
         })
-        .attr("fill", "lightblue")
+        .attr("fill", "url(#gradient-rainbow-main)")
         .on("mousemove", function (d) {
            d3.select(this)
                .attr("fill", "yellow")
@@ -73,11 +77,12 @@ var rect = bar.append("rect")
        })
            .on("mouseout", function (d) {
                d3.select(this)
-                   .attr("fill", "lightblue");
+                   .attr("fill", "url(#gradient-rainbow-main)");
                d3.select("div.tooltip").transition()
                    .duration(500)
                    .style("opacity", 0);
            });
+          //  .attr("fill","url(#gradient-rainbow-main)");
 risingBar(rect);
 //ease function
 // "linear-in-out",
@@ -90,35 +95,83 @@ risingBar(rect);
 //       "back-in-out",
 //       "bounce-in-out"
 function risingBar(var_rect){
-  var_rect.attr("fill", "lightblue")
+  var_rect.attr("fill", "url(#gradient-rainbow-main)")
   .transition()
   .duration(4000)
   .ease("exp-in-out")
   .attr("width",function(d){
     return scale(d.value);
-  }).each("end",function(d){
+  })
+  .each("end",function(d){
     var_rect.attr("width",0);
     risingBar(var_rect);
   });
 
 }
 
-    bar.append("text")
-        .attr("class", "value")
-        .attr("y", barHeight / 2)
-        .attr("dx", -valueMargin + labelWidth) //margin right
-        .attr("dy", ".35em") //vertical align middle
-        .attr("text-anchor", "end")
-        .text(function (d) {
-            return (d.value );
-        })
-        .attr("x", function (d) {
-            var width = this.getBBox().width;
-            return Math.max(width + valueMargin, scale(d.value));
-        });
+var value_label = bar.append("text")
+                     .attr("class", "value")
+                     .attr("y", barHeight / 2)
+                     .attr("dx", -valueMargin + labelWidth) //margin right
+                     .attr("dy", ".35em") //vertical align middle
+                     .attr("text-anchor", "end")
+                     .text(function (d) {
+                       return (d.value );
+                     })
+                     .attr("x", function (d) {
+                       var width = this.getBBox().width;
+                       return Math.max(width + valueMargin, scale(d.value));
+                     }).attr("opacity",0);
+showlabel(value_label);
 
+// value_label.transition().duration
+function showlabel(val_label){
+  val_label.transition()
+  .duration(4000)
+  .attr("opacity",1)
+  .each("end",function(d){
+    val_label.attr("opacity",0);
+    showlabel(val_label);
+  });
 
-        svg.append("rect").attr('width', width).attr('height', height)
+}
+// value_label.transition().duration(4000).attr("opacity",1);
+var gradient = svg.append("defs")
+  .append("linearGradient")
+    .attr("id", "gradient")
+    .attr("x1", "0%")
+    .attr("y1", "0%")
+    .attr("x2", "100%")
+    .attr("y2", "100%")
+    .attr("spreadMethod", "pad");
+
+gradient.append("stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "#0c0")
+    .attr("stop-opacity", 1);
+
+gradient.append("stop")
+    .attr("offset", "100%")
+    .attr("stop-color", "#c00")
+    .attr("stop-opacity", 1);
+
+// rect.attr("fill","url(#gradient-rainbow-main)");
+svg.append("rect").attr('width', width).attr('height', height)
       .style('stroke', 'black').style('fill', 'none');
 
+function createGradient(idName, endPerc) {
+
+          var coloursRainbow = [ "#296DA4", "#0C8B8C"];
+
+          defs.append("linearGradient")
+            .attr("id", idName)
+            .attr("gradientUnits", "userSpaceOnUse")
+            .attr("x1", "0%").attr("y1", "0%")
+            .attr("x2", endPerc).attr("y2", "0%")
+            .selectAll("stop")
+            .data(coloursRainbow)
+            .enter().append("stop")
+            .attr("offset", function(d,i) { return i/(coloursRainbow.length-1); })
+            .attr("stop-color", function(d) { return d; });
+        }
 });

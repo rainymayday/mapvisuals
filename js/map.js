@@ -60,7 +60,7 @@ $(function () {
             .append("path")
             .attr("stroke", "white")
             .attr("stroke-width", 0.5)
-            .attr("fill", "black")
+            .attr("fill", "blue")
             .attr("opacity", 0.5)
             .attr("d", path)
             .on("mousemove", function (d) {
@@ -75,7 +75,7 @@ $(function () {
             })
             .on("mouseout", function (d) {
                 d3.select(this)
-                    .attr("fill", "black")
+                    .attr("fill", "blue")
                     .attr("opacity", 0.5);
                 d3.select("div.tooltip").transition()
                     .duration(500)
@@ -111,9 +111,11 @@ $(function () {
                         .style("left", (d3.event.pageX) + "px")
                         .style("top", (d3.event.pageY - 28) + "px");
                 });
+                    // .duration(200)
+                    // .style("fill","yellow");
         });
         timeForTimeline();
-      
+
     });
 
 

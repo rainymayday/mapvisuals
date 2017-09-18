@@ -15,8 +15,8 @@
     font-weight: bold;
   }*/
   body{
-    background-color: rgb(64,74,89);
-    /*background-color: black;*/
+    /*background-color: rgb(64,74,89);*/
+    background-color: black;
   }
   div.tooltip {
  	position: absolute;
@@ -39,16 +39,11 @@ table,th,td{
   color: white;
   text-align: center;
 }
-/*tr:nth-child(even){
-  background-color: #4CAF50}*/
+
 th {
     background-color: #23385e;
     color: white;
 }
-#xaxis .domain {
-  fill:none;
-  stroke:#000;
-}
-#xaxis text, #yaxis text {
-  font-size: 12px;
-}
+/*rect{
+  fill: url(#temperature-gradient);
+}*/

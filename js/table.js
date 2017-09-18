@@ -1,11 +1,24 @@
 var width = $("#barchartContainer").width(),
 height = 350;
+function change(table){
+var row = table.insertRow(table.rows.length);
+for(j=0;j<table.rows[0].cells.length;j++){
+var cell = row.insertCell(j);
+cell.height = "24px";
+cell.innerHTML = table.rows[0].cells[j].innerHTML;
+}
+table.deleteRow(0);
+};
+function tableInterval(){
+var table = document.getElementById("test");
+change(table);
+};
 
   function tabulate(data, columns) {
-		var table = d3.select('#table').append('table')
+		var table = d3.select('#table').append('table').attr("class","table")
 		var thead = table.append('thead')
-		var	tbody = table.append('tbody');
-    
+		var	tbody = table.append('tbody').attr("id","test");
+
 
 		// append the header row
 		thead.append('tr')
@@ -38,3 +51,4 @@ height = 350;
     tabulate(data, ['Market', 'Order No.','Date/Time']);
 
   });
+  setInterval("tableInterval()",1000);
