@@ -11,11 +11,14 @@
     "compression": "^1.7.0",
     "cookie-parser": "~1.4.3",
     "d3": "^3.5.12",
+    "dateformat": "^2.0.0",
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "jade": "~1.11.0",
     "jquery": "^3.2.1",
+    "lodash-node": "^3.10.2",
     "morgan": "~1.8.1",
+    "oracledb": "^1.13.1",
     "serve-favicon": "~2.4.2"
   }
 }

@@ -1,10 +1,13 @@
 var http = require('http');
 var oracledb = require('oracledb');
 var url = require('url');
+var config = require('../secure')
 
 var connection = oracledb.getConnection(
   {
-    
+    user          : config.user,
+    password      : config.password,
+    connectString : config.connectString
   });
 
 

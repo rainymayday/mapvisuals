@@ -182,5 +182,8 @@ typings/
 # dotenv environment variables file
 .env
 
+#secure configuration
+secure.js
+
 
 # End of https://www.gitignore.io/api/node,macos,intellij

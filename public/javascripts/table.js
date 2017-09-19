@@ -47,7 +47,7 @@ change(table);
 	  return table;
 	}
 
-	  d3.json("data/tabledata.json", function(error, data) {
+	  d3.json("/table.json", function(error, data) {
     tabulate(data, ['Market', 'Order No.','Date/Time']);
 
   });
