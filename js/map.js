@@ -96,7 +96,7 @@ $(function () {
             if (error)
                 return console.error(error);
 
-            g.selectAll("circle")
+            var marks = g.selectAll("circle")
                 .data(location).enter()
                 .append("circle")
                 .attr("r", "2.5px")
@@ -111,13 +111,24 @@ $(function () {
                         .style("left", (d3.event.pageX) + "px")
                         .style("top", (d3.event.pageY - 28) + "px");
                 });
+
+                shinyDots(marks);
                     // .duration(200)
                     // .style("fill","yellow");
         });
+
         timeForTimeline();
 
     });
-
+    function shinyDots(var_marks){
+    var_marks.transition()
+    .duration(2000)
+    .style("fill","SpringGreen")
+    .each("end",function(d){
+      var_marks.style("fill","YellowGreen");
+      shinyDots(var_marks);
+    });
+    }
 
     function timeForTimeline() { // har
         var timeline = g.append("g")
