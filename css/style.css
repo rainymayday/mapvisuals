@@ -44,6 +44,19 @@ th {
     background-color: #23385e;
     color: white;
 }
-/*rect{
-  fill: url(#temperature-gradient);
-}*/
+div#title{
+  background-color: black;
+  height: 15px;
+
+}
+h2,h3{
+  color: white;
+  text-align: center;
+
+}
+div#card{
+  background-color: tomato;
+}
+div.panel{
+  height: 50px;
+}

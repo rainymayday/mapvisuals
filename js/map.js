@@ -50,8 +50,8 @@ $(function () {
             .projection(projection);
 
           // reference triangle
-        g.append("rect").attr('width', width).attr('height', height)
-        .style('stroke', 'black').style('fill', 'none');
+        // g.append("rect").attr('width', width).attr('height', height)
+        // .style('stroke', 'black').style('fill', 'none');
 
         g.append("g")
             .selectAll("path")
