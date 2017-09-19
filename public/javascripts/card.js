@@ -1,3 +1,4 @@
-//to be continued
-var total = 12345;
-var len = total.toString().length;
+
+$.get( "/card.json", function(json) {
+  $('#cardContent').text("Total No of Orders: "+ json.value);
+});

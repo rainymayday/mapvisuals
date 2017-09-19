@@ -27,7 +27,11 @@
   opacity: 0.9;
 }
 div.table {
-    border-collapse: collapse;
+  border-collapse: collapse;
+  /*height:150px;*/
+  /*overflow:auto;
+  margin-top:20px;*/
+
 }
 table,th,td{
   border: 1px solid white;
@@ -51,7 +55,7 @@ h2,h3{
 
 }
 div#card{
-  background-color: tomato;
+  background-color: lightsteelblue;
 }
 div.panel{
   height: 50px;

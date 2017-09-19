@@ -48,7 +48,8 @@ change(table);
 	}
 
 	  d3.json("/table.json", function(error, data) {
-    tabulate(data, ['Market', 'Order No.','Date/Time']);
+    var table =tabulate(data, ['Market', 'Order No.','Date/Time']);
+    // $('table').scrollTableBody();
 
   });
   setInterval("tableInterval()",1000);

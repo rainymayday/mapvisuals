@@ -7,7 +7,7 @@ var _ = require('lodash-node');
 var dateFormat = require('dateformat');
 var config = require('../secure')
 
-router.get('/table.json', function (req, res, next) {
+router.get('/card.json', function (req, res, next) {
   var connection = oracledb.getConnection(
     {
       user          : config.user,
@@ -18,7 +18,7 @@ router.get('/table.json', function (req, res, next) {
         console.error(err.message);
         return;
       }else{
-        connection.execute("SELECT * FROM TX3_TOP_NEW_ORDER_MV where country_full_name in ('INDIA','MALAYSIA','CHINA','SINGAPORE','THAILAND')",function(err, result)
+        connection.execute("select * from TX3_ALL_OPEN_ORDER_SUMTOT",function(err, result)
         {
           if (err) {
             console.error(err.message);
@@ -28,13 +28,11 @@ router.get('/table.json', function (req, res, next) {
           var responseObject=[];
           _.forEach(result.rows, function(value) {
             var singleObject={
-              "Market": value.COUNTRY_FULL_NAME,
-              "Order No.":value.ORDER_NO,
-              "Date/Time":dateFormat(new Date(value.CREATED_DATE),'yyyy-mm-dd')
+              "value": value.TOTAL_ORDERS,
             };
             responseObject.push(singleObject);
           });
-          res.json(responseObject);
+          res.json(responseObject[0]);
           doRelease(connection);
         });
       }

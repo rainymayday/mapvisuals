@@ -8,6 +8,7 @@ var compression = require('compression');
 
 var table = require('./routes/table');
 var bar = require('./routes/barchart');
+var card = require('./routes/card');
 
 var app = express();
 
@@ -22,6 +23,8 @@ app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 
 app.use('/', table);
 app.use('/', bar);
+app.use('/', card);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
