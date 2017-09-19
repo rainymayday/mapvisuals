@@ -14,7 +14,7 @@ $(function () {
         .attr("height", height);
 
 
-    d3.json("data/bar.json",function(error,d){
+    d3.json("/bar.json",function(error,d){
       var max_value = d3.max(d, function (data) {
           return data.value;
       });

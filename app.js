@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var compression = require('compression');
 
 var table = require('./routes/table');
+var bar = require('./routes/barchart');
 
 var app = express();
 
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 
 app.use('/', table);
+app.use('/', bar);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

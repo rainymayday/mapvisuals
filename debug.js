@@ -2,7 +2,7 @@ var oracledb = require('oracledb');
 var _ = require('lodash-node');
 var dateFormat = require('dateformat');
 oracledb.outFormat = oracledb.OBJECT;
-var config = require('../secure')
+var config = require('./secure')
 var connection = oracledb.getConnection(
   {
     user          : config.user,
@@ -13,7 +13,7 @@ var connection = oracledb.getConnection(
       console.error(err.message);
       return;
     }else{
-      connection.execute("SELECT * FROM TX3_TOP_NEW_ORDER_MV",function(err, result)
+      connection.execute("select * from (select * from tx3_all_open_order_sum order by total_orders DESC) WHERE rownum<=5",function(err, result)
       {
         if (err) {
           console.error(err.message);
@@ -23,9 +23,8 @@ var connection = oracledb.getConnection(
         var responseObject=[];
         _.forEach(result.rows, function(value) {
           var singleObject={
-            "Market": value.COUNTRY_FULL_NAME,
-            "Order No.":value.ORDER_NO,
-            "Date/Time": dateFormat(new Date(value.CREATED_DATE),'yyyy-MM-dd')
+            "label": value.COUNTRY_FULL_NAME,
+            "value":value.TOTAL_ORDERS
           };
           responseObject.push(singleObject);
         });
