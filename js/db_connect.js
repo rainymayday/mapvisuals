@@ -4,9 +4,7 @@ var url = require('url');
 
 var connection = oracledb.getConnection(
   {
-    user          : "CT_DM_1",
-    password      : "CTPRODPX#10",
-    connectString : "10.202.16.10:1525/yspdb016"
+    
   });
 
 

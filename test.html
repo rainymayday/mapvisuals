@@ -1,26 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mapvisuals</title>
-    <link href="node_modules\bootstrap\dist\css\bootstrap.css" rel="stylesheet">
-    <!-- <link rel='stylesheet' href='css/style.css'> -->
-
-</head>
+<meta charset="utf-8">
 <body>
-  <div class="container-fluid">
-      <div class="row" >
-<div id="rects"></div>
-</div>
-</div>
-</body>
-
 <script src="node_modules\d3\d3.js"></script>
-<script src="node_modules\jquery\dist\jquery.slim.js"></script>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-<script type='text/javascript' src='js/card.js'></script>
-<!-- <script type='text/javascript' src='js/barchart.js'></script> -->
-<!-- <script type='text/javascript' src='js/table.js'></script> -->
-</html>
+<script>
+var val = 123456;
+
+function commafy( num ) {
+    var str = num.toString().split('.');
+    if (str[0].length >= 5) {
+        str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+    }
+    if (str[1] && str[1].length >= 5) {
+        str[1] = str[1].replace(/(\d{3})/g, '$1 ');
+    }
+    return str.join('.');
+}
+
+var val_display = commafy(val);
+
+// for (var i = 0, len = val_display.length; i < len; i++) {
+//   console.log(val_display[i])
+// }
+
+var data = [];
+
+for (var i = 0; i < val_display.length; i++) {
+    data.push({
+        order: i,
+        value: val_display[i]
+    });
+}
+console.log(JSON.stringify(data))
+// var data = [{"order":1,
+//   "value":"1"
+//
+// },
+// {
+//   "order":2,
+//   "value":"2"
+// },
+// {
+//   "order":3,
+//   "value":"3"
+// },
+// {
+//   "order":4,
+//   "value":","
+//
+// },
+// {
+//   "order":5,
+//   "value":1
+// }
+//
+// ]
+var width = 100;
+var height = 100;
+
+var canvas = d3.select("body")
+               .append("svg")
+               .attr("height", 500)
+               .attr("width", 1000)
+               //.attr("fill", "red")
+               .append("g");
+
+
+var someData = canvas.selectAll("rect")
+                    .data(data)
+                    .enter()
+                     .append("g")
+                      .append("rect")
+                      .attr("height", height)
+                      .attr("width", width)
+                      .attr("fill", "red")
+                      .attr("transform",
+                       function(d){ return "translate(" + height * d.order + ",0)";});
+
+canvas.selectAll("g")
+        .append("text")
+        .attr("transform",
+              function(d){ return "translate(" + height * d.order + ",65)";})
+        .attr("font-size", "2em")
+        .attr("color", "black")
+        .text(function(d){ return d.value;});
+// console.log(val_display);
+</script>

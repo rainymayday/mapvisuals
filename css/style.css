@@ -8,15 +8,10 @@
     fill: YellowGreen ;
 
   }
-  /*text{
-    font-size: 18px;
-    text-align: center;
-    fill: white;
-    font-weight: bold;
-  }*/
+
   body{
     /*background-color: rgb(64,74,89);*/
-    background-color: black;
+    background-color: #003249 ;
   }
   div.tooltip {
  	position: absolute;
@@ -36,6 +31,7 @@ div.table {
 }
 table,th,td{
   border: 1px solid white;
+  border-style: none;
   color: white;
   text-align: center;
 }
@@ -45,7 +41,7 @@ th {
     color: white;
 }
 div#title{
-  background-color: black;
+  background-color: #003249;
   height: 15px;
 
 }

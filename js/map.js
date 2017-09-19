@@ -60,7 +60,7 @@ $(function () {
             .append("path")
             .attr("stroke", "white")
             .attr("stroke-width", 0.5)
-            .attr("fill", "blue")
+            .attr("fill", "DarkSteelBlue")
             .attr("opacity", 0.5)
             .attr("d", path)
             .on("mousemove", function (d) {
@@ -75,7 +75,7 @@ $(function () {
             })
             .on("mouseout", function (d) {
                 d3.select(this)
-                    .attr("fill", "blue")
+                    .attr("fill", "DarkSteelBlue")
                     .attr("opacity", 0.5);
                 d3.select("div.tooltip").transition()
                     .duration(500)

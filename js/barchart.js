@@ -4,7 +4,7 @@ $(function () {
         margin = 10,
         valueMargin = 10,
         width = $("#barchartContainer").width(),
-        height = 250,
+        height = 300,
         bar, svg, scale, xAxis, labelWidth = 0;
 
 
@@ -19,7 +19,7 @@ $(function () {
           return data.value;
       });
       var barHeight = (height - axisMargin - margin * 2) * 0.4 / d.length;
-      var barPadding = (height - axisMargin - margin * 2) * 0.6 / d.length;
+      var barPadding = (height - axisMargin - margin*2) * 0.6 / d.length;
 
       bar = svg.selectAll("g")
           .data(d)
@@ -38,7 +38,7 @@ $(function () {
                     .attr("fill","white") //vertical align middle
                     .text(function (d) {
                         return d.label;
-                    }).each(function () {
+                    }).style("font-size",12).each(function () {
                     labelWidth = Math.ceil(Math.max(labelWidth, this.getBBox().width));
                 });
 
@@ -81,6 +81,7 @@ $(function () {
                                    .attr("dx", -valueMargin + labelWidth) //margin right
                                    .attr("dy", ".35em") //vertical align middle
                                    .attr("text-anchor", "end")
+                                   .style("font-size",10)
                                    .text(function (d) {
                                      return (d.value );
                                    })
@@ -161,7 +162,7 @@ gradient.append("stop")
 
 function createGradient(idName, endPerc) {
 
-          var coloursRainbow = [ "#296DA4", "#0C8B8C"];
+          var coloursRainbow = [ "#B53F22", "	#F58D39","	#95C5DB","#305F7A"];
 
           defs.append("linearGradient")
             .attr("id", idName)
