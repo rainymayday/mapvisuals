@@ -11,7 +11,7 @@
 
   body{
     /*background-color: rgb(64,74,89);*/
-    background-color: #003249 ;
+    background-color: #002060 ;
   }
   div.tooltip {
  	position: absolute;
@@ -36,7 +36,7 @@ div.table {
   margin-top:20px;*/
 
 }
-table,th,td{
+table,th,td,tr{
   border: 1px solid white;
   border-style: none;
   color: white;
@@ -44,7 +44,7 @@ table,th,td{
 }
 
 th {
-    background-color: #23385e;
+    background-color: #682D8E;
     color: white;
 }
 div#title{

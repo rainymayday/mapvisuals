@@ -144,7 +144,7 @@ $(function(){
 
   function createGradient(idName, endPerc) {
 
-            var coloursRainbow = [ "#6495ED","#95C5DB","#305F7A"];
+            var coloursRainbow = [ "#682D8E","#B9E3F5"];
 
             defs.append("linearGradient")
               .attr("id", idName)

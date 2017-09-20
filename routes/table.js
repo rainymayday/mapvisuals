@@ -7,7 +7,7 @@ var _ = require('lodash-node');
 var dateFormat = require('dateformat');
 var config = require('../secure')
 
-var sql  = "SELECT * FROM TX3_TOP_NEW_ORDER_MV where country_full_name in ('INDIA','MALAYSIA','CHINA','SINGAPORE','THAILAND','INDONESIA','PHILIPPINES')"
+var sql  = "select * from (SELECT * FROM TX3_TOP_NEW_ORDER_MV order by CREATED_DATE desc) where rownum <=8"
 
 router.get('/table.json', function (req, res, next) {
   console.info("Request table data at "+ new Date());

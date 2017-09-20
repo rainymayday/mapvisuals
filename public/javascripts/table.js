@@ -1,3 +1,5 @@
+
+// 'AUS','CHN','IND','SGP','LAO','IDN','VNM','KOR','JPN','HKG','THA','PHL','KHM','MMR','NPL','BTN','NZL','MYS','TWN'
 $(function(){
   var interval = null;
   function updateSvg(data){

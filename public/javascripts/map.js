@@ -36,13 +36,13 @@ $(function () {
 
     var g = svg.append("g");
 
-    d3.json("data/panasia1.geojson", function (error, root) {
+    d3.json("data/map.geojson", function (error, root) {
         if (error)
             return console.error(error);
         console.log(root.features);
         // var center = d3.geo.centroid(root)
-        var center = [90.4074, 38.9042];
-        var scale  = 490;
+        var center = [90.4074, 25.9042];
+        var scale  = 330;
         var offset = [width/3, height/3];
         //104.4074, 36.9042
         projection = d3.geo.mercator()
