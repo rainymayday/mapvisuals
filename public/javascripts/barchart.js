@@ -148,7 +148,7 @@ gradient.append("stop")
 
 function createGradient(idName, endPerc) {
 
-          var coloursRainbow = [ "#B53F22", "	#F58D39","	#95C5DB","#305F7A"];
+          var coloursRainbow = [ "#6495ED","#95C5DB","#305F7A"];
 
           defs.append("linearGradient")
             .attr("id", idName)

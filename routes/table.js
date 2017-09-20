@@ -31,8 +31,9 @@ router.get('/table.json', function (req, res, next) {
           _.forEach(result.rows, function(value) {
             var singleObject={
               "Market": value.COUNTRY_FULL_NAME,
-              "Order No.":value.ORDER_NO,
-              "Date/Time":dateFormat(new Date(value.CREATED_DATE),'yyyy-mm-dd')
+              "Order No.": value.ORDER_NO,
+              // "Date/Time": value.CREATED_DATE
+              "Date/Time":dateFormat(new Date(value.CREATED_DATE),'yyyy-mm-dd HH:mm:ss')
             };
             responseObject.push(singleObject);
           });

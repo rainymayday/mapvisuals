@@ -104,6 +104,7 @@ $(function () {
                 .data(location).enter()
                 .append("circle")
                 .attr("r", "2.5px")
+                .style("opacity",.9)
                 .attr("transform", function (d) {
                     return "translate(" + projection([d.Long, d.Lat]) + ")";
                 })
@@ -127,9 +128,9 @@ $(function () {
     function shinyDots(var_marks){
     var_marks.transition()
     .duration(2000)
-    .style("fill","SpringGreen")
+    .style("opacity",0.1)
     .each("end",function(d){
-      var_marks.style("fill","YellowGreen");
+      var_marks.style("opacity",.9);
       shinyDots(var_marks);
     });
     }
