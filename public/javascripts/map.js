@@ -1,21 +1,25 @@
 $(function () {
     var width = $("#mapContainer").width();
-    var height = 600;
+    var height = 700;
     var projection,path,arcs;
 
     var arcdata = [
-        {
-            targetLocation: [100.292530, 5.307970],
-            sourceLocation: [103.640949, 1.323385]
-        },
-      {
-        targetLocation: [116.4074,39.9042],
-        sourceLocation: [103.640949, 1.323385]
-      },
-    {
-      targetLocation:[77.2090,28.6139],
-      sourceLocation:[103.640949, 1.323385]
-    }];
+        {   targetLocation: [100.470143, 5.334135],
+            sourceLocation: [103.709366, 1.35295]},
+      {targetLocation: [100.777442,13.746792],
+        sourceLocation: [103.709366, 1.35295]},
+    {targetLocation:[105.836448,21.028504],
+      sourceLocation:[121.004309, 31.325468]},
+  {targetLocation:[107.056198,-6.274306],
+    sourceLocation:[100.777442, 13.746792]},
+  {targetLocation:[121.089982,14.607196],
+    sourceLocation:[100.777442, 13.746792]
+  },
+  {
+    targetLocation:[100.777442, 13.746792],
+      sourceLocation:[113.596485, 23.178301]
+  }
+];
 
     var svg = d3.select("#map").append("svg")
         .attr("width", width)
@@ -37,8 +41,8 @@ $(function () {
             return console.error(error);
         console.log(root.features);
         // var center = d3.geo.centroid(root)
-        var center = [90.4074, 36.9042];
-        var scale  = 460;
+        var center = [90.4074, 38.9042];
+        var scale  = 490;
         var offset = [width/3, height/3];
         //104.4074, 36.9042
         projection = d3.geo.mercator()

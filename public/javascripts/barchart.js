@@ -4,7 +4,7 @@ $(function () {
         margin = 10,
         valueMargin = 10,
         width = $("#barchartContainer").width(),
-        height = 300,
+        height = 350,
         bar, svg, scale, xAxis, labelWidth = 0;
 
 
@@ -59,16 +59,16 @@ $(function () {
                       .attr("fill", "url(#gradient-rainbow-main)")
                       .on("mousemove", function (d) {
                          d3.select(this)
-                             .attr("fill", "yellow")
-                             .attr("opacity",0.9);
-                         d3.select("div.tooltip").html(d.label + "<br>" + d.value )
-                             .style("opacity", ".9")
+                            //  .attr("fill", "yellow")
+                             .style("opacity",0.6);
+                         d3.select("div.tooltip").html(d.label + "<br>" + commafy(d.value) )
+                             .style("opacity", .9)
                              .style("left", (d3.event.pageX) + "px")
                              .style("top", (d3.event.pageY - 50) + "px");
                      })
                          .on("mouseout", function (d) {
                              d3.select(this)
-                                 .attr("fill", "url(#gradient-rainbow-main)");
+                                 .style("opacity",1);
                              d3.select("div.tooltip").transition()
                                  .duration(500)
                                  .style("opacity", 0);
@@ -83,7 +83,7 @@ $(function () {
                                    .attr("text-anchor", "end")
                                    .style("font-size",10)
                                    .text(function (d) {
-                                     return (d.value );
+                                     return (commafy(d.value) );
                                    })
                                    .attr("x", function (d) {
                                      var width = this.getBBox().width;
@@ -95,20 +95,6 @@ $(function () {
         });
 
 
-
-
-
-
-//ease function
-// "linear-in-out",
-//       "quad-in-out",
-//       "cubic-in-out",
-//       "sin-in-out",
-//       "exp-in-out",
-//       "circle-in-out",
-//       "elastic-in-out",
-//       "back-in-out",
-//       "bounce-in-out"
 function risingBar(var_rect){
   var_rect.attr("fill", "url(#gradient-rainbow-main)")
   .transition()
@@ -174,5 +160,16 @@ function createGradient(idName, endPerc) {
             .enter().append("stop")
             .attr("offset", function(d,i) { return i/(coloursRainbow.length-1); })
             .attr("stop-color", function(d) { return d; });
+        }
+
+function commafy( num ) {
+            var str = num.toString().split('.');
+            if (str[0].length >= 4) {
+                str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+            }
+            if (str[1] && str[1].length >= 4) {
+                str[1] = str[1].replace(/(\d{3})/g, '$1 ');
+            }
+            return str.join('.');
         }
 });
