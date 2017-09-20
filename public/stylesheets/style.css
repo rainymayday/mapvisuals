@@ -26,6 +26,9 @@
 	pointer-events: none;
   opacity: 0.9;
 }
+div#titleContainer{
+  height: 60px;
+}
 div.table {
   border-collapse: collapse;
   /*height:150px;*/
@@ -56,6 +59,7 @@ h2,h3{
 }
 div#card{
   background-color: lightsteelblue;
+  height: 25px;
 }
 div.panel{
   height: 50px;

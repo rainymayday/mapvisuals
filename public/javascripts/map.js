@@ -1,6 +1,6 @@
 $(function () {
     var width = $("#mapContainer").width();
-    var height = 500;
+    var height = 600;
     var projection,path,arcs;
 
     var arcdata = [
@@ -37,8 +37,8 @@ $(function () {
             return console.error(error);
         console.log(root.features);
         // var center = d3.geo.centroid(root)
-        var center = [90.4074, 35.9042];
-        var scale  = 370;
+        var center = [90.4074, 36.9042];
+        var scale  = 460;
         var offset = [width/3, height/3];
         //104.4074, 36.9042
         projection = d3.geo.mercator()
