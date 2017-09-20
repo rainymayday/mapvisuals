@@ -10,6 +10,7 @@ var config = require('../secure')
 var sql  = "SELECT * FROM TX3_TOP_NEW_ORDER_MV where country_full_name in ('INDIA','MALAYSIA','CHINA','SINGAPORE','THAILAND','INDONESIA','PHILIPPINES')"
 
 router.get('/table.json', function (req, res, next) {
+  console.info("Request table data at "+ new Date());
   var connection = oracledb.getConnection(
     {
       user          : config.user,

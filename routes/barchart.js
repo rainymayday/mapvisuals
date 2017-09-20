@@ -8,6 +8,7 @@ var dateFormat = require('dateformat');
 var config = require('../secure')
 
 router.get('/bar.json', function (req, res, next) {
+  console.info("Request bar data at "+ new Date());
   var connection = oracledb.getConnection(
     {
       user          : config.user,
