@@ -34,7 +34,7 @@ router.get('/table.json', function (req, res, next) {
               "Market": value.COUNTRY_FULL_NAME,
               "Order No.": value.ORDER_NO,
               // "Date/Time": value.CREATED_DATE
-              "Date/Time":dateFormat(new Date(value.CREATED_DATE),'yyyy-mm-dd HH:mm:ss')
+              "Date/Time":dateFormat(new Date(value.CREATED_DATE),'yyyy-mm-dd HH:MM:ss')
             };
             responseObject.push(singleObject);
           });
