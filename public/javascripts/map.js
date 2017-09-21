@@ -1,26 +1,50 @@
 $(function () {
     var width = $("#mapContainer").width();
-    var height = 700;
+    var height = window.innerHeight;
     var projection,path,arcs;
 
     var arcdata = [
-        {   targetLocation: [100.470143, 5.334135],
-            sourceLocation: [103.709366, 1.35295]},
-      {targetLocation: [100.777442,13.746792],
-        sourceLocation: [103.709366, 1.35295]},
-    {targetLocation:[105.836448,21.028504],
-      sourceLocation:[121.004309, 31.325468]},
-  {targetLocation:[107.056198,-6.274306],
-    sourceLocation:[100.777442, 13.746792]},
-  {targetLocation:[121.089982,14.607196],
-    sourceLocation:[100.777442, 13.746792]
-  },
-  {
-    targetLocation:[100.777442, 13.746792],
-      sourceLocation:[113.596485, 23.178301]
-  }
-];
-
+        {
+            targetLocation: [100.47014,5.334135],
+            sourceLocation: [103.70937, 1.35295]
+        },
+        {
+          targetLocation: [100.77744,13.74679],
+          sourceLocation: [103.70937, 1.35295]
+        },
+        {
+          targetLocation: [121.00341,31.32547],
+          sourceLocation: [106.67095, 10.81701]
+        },
+        {
+          targetLocation:[105.97455,21.08364],
+          sourceLocation:[103.70937, 1.35295]
+        },
+        {
+          targetLocation:[106.97661,-6.351062],
+          sourceLocation:[103.70937, 1.35295]
+        },
+        {
+          targetLocation:[114.70834,-3.459884],
+          sourceLocation:[103.70937, 1.35295]
+        },
+        {
+          targetLocation:[121.08998,14.6072],
+          sourceLocation:[100.77744, 13.74679]
+        },
+        {
+          targetLocation:[80.219362,12.9079],
+          sourceLocation:[103.64061,1.323469]
+        },
+        {
+          targetLocation:[104.81276,11.551543],
+          sourceLocation:[100.77744, 13.74679]
+        },
+        {
+          targetLocation:[106.609518,10.708225],
+          sourceLocation:[100.77744, 13.74679]
+        }
+      ];
     var svg = d3.select("#map").append("svg")
         .attr("width", width)
         .attr("height", height)

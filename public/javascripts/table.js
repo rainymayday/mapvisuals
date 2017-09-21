@@ -4,7 +4,7 @@ $(function(){
   var interval = null;
   function updateSvg(data){
     var width = $("#barchartContainer").width(),
-    height = 350;
+    height = window.innerHeight*0.5;
     function change(table){
     var row = table.insertRow(table.rows.length);
     for(j=0;j<table.rows[0].cells.length;j++){
@@ -70,5 +70,5 @@ $(function(){
   setInterval(function(){
     clearInterval(interval);
     intervalUpdate();
-  },10000)
+  },40000)
 });

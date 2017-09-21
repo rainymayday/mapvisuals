@@ -29,14 +29,14 @@
 div#titleContainer{
   height: 60px;
 }
-div.table {
+/*div.table {
   border-collapse: collapse;
-  /*height:150px;*/
-  /*overflow:auto;
-  margin-top:20px;*/
+ height:150px;
+  overflow:auto;
+  margin-top:20px;
 
-}
-table,th,td,tr{
+}*/
+table,th{
   border: 1px solid white;
   border-style: none;
   color: white;
@@ -45,7 +45,10 @@ table,th,td,tr{
 
 th {
     background-color: #682D8E;
-    color: white;
+    /*color: white;*/	
+}
+td,tr{
+	border-style:none;
 }
 div#title{
   background-color: #003249;

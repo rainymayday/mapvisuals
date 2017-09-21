@@ -5,7 +5,7 @@ $(function(){
           margin = 10,
           valueMargin = 10,
           width = $("#barchartContainer").width(),
-          height = 350,
+          height = window.innerHeight*0.5,
           bar, svg, scale, xAxis, labelWidth = 0;
 
 
@@ -84,6 +84,7 @@ $(function(){
                                      .text(function (d) {
                                        return (commafy(d.value) );
                                      })
+									 .style("font-weight","bold")
                                      .attr("x", function (d) {
                                        var width = this.getBBox().width;
                                        return Math.max(width + valueMargin, scale(d.value));
@@ -179,6 +180,6 @@ $(function(){
 intervalUpdate();
   setInterval(function () {
 intervalUpdate();
-  }, 10000);
+  }, 40000);
 
 });
