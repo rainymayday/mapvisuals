@@ -1,3 +1,9 @@
+#barchartContainer{
+	position: relative;
+}
+#mapContainer{
+	position: absolute;}
+
     .arcs {
 	  stroke-width: 2px;
 	  stroke: purple;

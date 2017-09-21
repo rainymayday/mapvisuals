@@ -65,8 +65,8 @@ $(function () {
             return console.error(error);
         console.log(root.features);
         // var center = d3.geo.centroid(root)
-        var center = [90.4074, 25.9042];
-        var scale  = 330;
+        var center = [55.4074, 25.9042];
+        var scale  = 350;
         var offset = [width/3, height/3];
         //104.4074, 36.9042
         projection = d3.geo.mercator()
